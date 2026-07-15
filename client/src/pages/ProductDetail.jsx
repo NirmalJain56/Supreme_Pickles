@@ -4,7 +4,7 @@ import { FiShoppingCart, FiHeart, FiStar, FiTruck, FiShield, FiChevronLeft, FiCh
 import { productAPI, reviewAPI, userAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { formatPrice, discountPercent, formatDate } from '../utils/helpers';
+import { formatPrice, discountPercent, formatDate, getImageUrl } from '../utils/helpers';
 import ProductCard from '../components/product/ProductCard';
 import toast from 'react-hot-toast';
 
@@ -123,7 +123,7 @@ export default function ProductDetail() {
             <div className="relative bg-cream-100 rounded-2xl overflow-hidden aspect-square mb-4">
               {product.images?.length > 0 ? (
                 <img
-                  src={product.images[activeImage]}
+                  src={getImageUrl(product.images[activeImage])}
                   alt={product.name}
                   className="w-full h-full object-cover"
                   onError={(e) => { e.target.style.display = 'none'; }}
@@ -156,7 +156,7 @@ export default function ProductDetail() {
                     onClick={() => setActiveImage(i)}
                     className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${activeImage === i ? 'border-mustard-400 shadow-warm' : 'border-cream-200 hover:border-mustard-200'}`}
                   >
-                    <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                    <img src={getImageUrl(img)} alt={`View ${i + 1}`} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
                   </button>
                 ))}
               </div>

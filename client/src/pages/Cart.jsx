@@ -4,7 +4,7 @@ import { FiMinus, FiPlus, FiTrash2, FiArrowRight, FiShoppingBag, FiTag } from 'r
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { paymentAPI } from '../services/api';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, getImageUrl } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
 export default function CartPage() {
@@ -80,7 +80,7 @@ export default function CartPage() {
               <Link to={`/products/${item.slug}`} className="flex-shrink-0">
                 <div className="w-20 h-20 bg-cream-100 rounded-xl overflow-hidden">
                   {item.image ? (
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                    <img src={getImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-2xl">🥒</div>
                   )}

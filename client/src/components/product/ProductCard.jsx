@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { FiShoppingCart, FiHeart, FiStar } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
-import { formatPrice, discountPercent, getEffectivePrice, getOriginalPrice, truncate } from '../../utils/helpers';
+import { formatPrice, discountPercent, getEffectivePrice, getOriginalPrice, truncate, getImageUrl } from '../../utils/helpers';
 import { userAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
@@ -54,7 +54,7 @@ export default function ProductCard({ product, index = 0 }) {
         <div className={`relative overflow-hidden bg-gradient-to-br ${colorClass} aspect-square`}>
           {product.images?.[0] ? (
             <img
-              src={product.images[0]}
+              src={getImageUrl(product.images[0])}
               alt={product.name}
               loading="lazy"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

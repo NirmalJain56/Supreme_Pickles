@@ -80,3 +80,14 @@ export const statusColor = (status) => {
   };
   return map[status] || 'bg-gray-100 text-gray-700';
 };
+
+// Get full image URL (prepends backend URL in production)
+export const getImageUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('data:')) return path;
+  
+  const apiUrl = import.meta.env.VITE_API_URL || '';
+  const baseUrl = apiUrl.replace(/\/api\/?$/, '') || 'http://localhost:5000';
+  
+  return `${baseUrl}${path}`;
+};

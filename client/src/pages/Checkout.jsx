@@ -5,7 +5,7 @@ import { FiMapPin, FiCreditCard, FiCheckCircle } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { orderAPI, paymentAPI } from '../services/api';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, getImageUrl } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
 const PAYMENT_METHODS = [
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
                 <div key={item.key} className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-cream-100 rounded-lg overflow-hidden flex-shrink-0">
                     {item.image ? (
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                      <img src={getImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-lg">🥒</div>
                     )}

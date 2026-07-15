@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { userAPI } from '../../services/api';
-import { formatPrice, getEffectivePrice } from '../../utils/helpers';
+import { formatPrice, getEffectivePrice, getImageUrl } from '../../utils/helpers';
 import { FiHeart, FiShoppingCart } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import toast from 'react-hot-toast';
@@ -51,7 +51,7 @@ export default function WishlistPage() {
           <div key={product._id} className="card p-4 flex gap-4">
             <Link to={`/products/${product.slug}`} className="w-20 h-20 bg-cream-100 rounded-xl overflow-hidden flex-shrink-0">
               {product.images?.[0] ? (
-                <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                <img src={getImageUrl(product.images[0])} alt={product.name} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-2xl">🥒</div>
               )}
