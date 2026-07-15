@@ -126,8 +126,7 @@ export default function HomePage() {
       <section className="bg-warm-gradient relative overflow-hidden" style={{ minHeight: '520px' }}>
         {/* Hero Slider Image — right side, faded */}
         <div
-          className="absolute top-0 right-0 h-full pointer-events-none"
-          style={{ width: '62%' }}
+          className="absolute inset-0 md:left-auto md:right-0 h-full pointer-events-none w-full md:w-[62%] opacity-15 md:opacity-100"
         >
           {heroSlides.map((slide, idx) => (
             <img
