@@ -30,9 +30,10 @@ const app = express();
 
 // Security middleware
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : 'http://localhost:5173';
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: [clientUrl, clientUrl + '/'], // Allow both with and without trailing slash just in case
     credentials: true,
   })
 );
