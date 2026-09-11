@@ -18,6 +18,7 @@ exports.sendOTP = async (req, res) => {
   }
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  console.log("For testing purposes, Generated OTP is:", otp);
 
   // Remove existing OTP for this email if any
   await Otp.deleteMany({ email });

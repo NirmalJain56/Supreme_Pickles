@@ -1,6 +1,10 @@
 require('dotenv').config();
 require('express-async-errors');
 
+const cron = require('node-cron');
+const https = require('https');
+const http = require('http');
+
 const dns = require('dns');
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
@@ -81,4 +85,34 @@ app.listen(PORT, () => {
   console.log(`\n🚀 Supreme Pickles Server running on http://localhost:${PORT}`);
   console.log(`📦 Environment: ${process.env.NODE_ENV}`);
   console.log(`🗄️  Database: ${process.env.MONGO_URI}\n`);
+
+  // ─── Keep-Alive Cron Job (Render Free Tier) ───────────────────────────────
+  // Render ke free tier mein backend 15 min inactivity ke baad pause ho jata hai.
+  // Yeh cron job har 14 minutes pe apne health endpoint ko ping karta hai taaki
+  // backend hamesha active rahe.
+  const RENDER_URL = process.env.RENDER_URL;
+
+  if (RENDER_URL) {
+    // Every 14 minutes  →  cron: '*/14 * * * *'
+    cron.schedule('*/14 * * * *', () => {
+      const pingUrl = `${RENDER_URL}/api/health`;
+      const client = pingUrl.startsWith('https') ? https : http;
+
+      const req = client.get(pingUrl, (res) => {
+        console.log(`[Keep-Alive] ✅ Pinged ${pingUrl} — Status: ${res.statusCode}`);
+      });
+
+      req.on('error', (err) => {
+        console.error(`[Keep-Alive] ❌ Ping failed: ${err.message}`);
+      });
+
+      req.end();
+    });
+
+    console.log(`⏰ Keep-Alive cron job started — pinging every 14 minutes`);
+    console.log(`🌐 Render URL: ${RENDER_URL}\n`);
+  } else {
+    console.log(`ℹ️  RENDER_URL not set — Keep-Alive cron job skipped (local dev mode)\n`);
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 });

@@ -1,0 +1,42 @@
+services:
+  # --- Backend Web Service ---------------------------------------------------
+  - type: web
+    name: supreme-pickles-backend
+    runtime: node
+    rootDir: server           # server folder mein sab kuch hai
+    buildCommand: npm install  # dependencies install karo
+    startCommand: npm start    # node server.js
+
+    # Render free tier ke liye
+    plan: free
+
+    # Environment variables — inhe Render dashboard mein bhi set karo
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: PORT
+        value: 10000
+
+      # Yeh variables Render dashboard mein manually set karo (sensitive hain)
+      - key: MONGO_URI
+        sync: false
+
+      - key: JWT_SECRET
+        sync: false
+
+      - key: JWT_EXPIRE
+        value: 30d
+
+      - key: RAZORPAY_KEY_ID
+        sync: false
+
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+
+      - key: CLIENT_URL
+        sync: false
+
+      # Keep-Alive cron ke liye — deploy hone ke baad apna Render URL dalein
+      - key: RENDER_URL
+        sync: false
